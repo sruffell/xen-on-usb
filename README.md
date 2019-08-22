@@ -33,7 +33,7 @@ of them)
 
 You *should* be able to boot this both in BIOS boot or EFI boot modes. This
 will start up the Debian netinstall image in rescue mode. You can get to a
-console from the rescue mode image by pressing F2.
+console from the rescue mode image by pressing ALT-F2.
 
 From the console, you can confirm that you're running under xen / efi by
 checking the output of `dmesg | grep -e xen -e efi`
