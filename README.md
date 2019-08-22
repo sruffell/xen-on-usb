@@ -14,17 +14,32 @@ of them)
 ## Installation
 
 - Download mini.iso.
+
 ```
         $ curl -O http://ftp.debian.org/debian/dists/buster/main/installer-amd64/current/images/netboot/mini.iso
 ```
 
 - Build the docker image.
+
 ```
         $ docker build -t xen-on-usb:latest - < Dockerfile
 ```
 
-- Insert a USB stick, 4GB should be large enough, into your system. Take note
+- Insert a USB stick, 4GB should be large enough, into your system and note
+  with device file is created for it. `lsblk` can be useful here if you specify
+  the transport column and look for 'usb'. In the output below you can see
+  that my USB device is represented by device file /dev/sdb.
+
+```
+        $ lsblk -d -o +TRAN,VENDOR
+        NAME MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT TRAN   VENDOR
+        sda    8:0    0 931.5G  0 disk            sata   ATA
+        sdb    8:16   1  30.2G  0 disk            usb    PNY
+        sr0   11:0    1  1024M  0 rom             sata   PLDS
+```
+
 - Run the partition script in the docker container
+
 ```
         $ docker run --privileged -ti -v $(pwd):/source xen-on-usb:latest /source/partition-usb.sh [usb device file] 
 ```
